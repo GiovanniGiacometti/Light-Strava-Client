@@ -6,6 +6,7 @@ from strava_client.constants import DEFAULT_SCOPES
 from strava_client.enums.auth import StravaScope
 from strava_client.models.api import StravaActivity
 from strava_client.models.requests import (
+    StravaGetActivitiesRequest,
     StravaGetTokenRequest,
     StravaGetTokenResponse,
     StravaRefreshTokenRequest,
@@ -35,21 +36,38 @@ class StravaClient:
 
         self._verify_initialization()
 
-    def get_activities(self) -> list[StravaActivity]:
+    def get_activities(
+        self,
+        before: datetime | str | None = None,
+        after: datetime | str | None = None,
+        page: int = 1,
+        per_page: int = 30,
+    ) -> list[StravaActivity]:
         """
         Get the activities for the authenticated user.
         """
 
         self._verify_token()
 
-        url = f"{self.BASE_SERVER_URL}/activities"
+        url = f"{self.BASE_SERVER_URL}/athlete/activities"
 
         # # Set the headers
 
         headers = {"Authorization": f"Bearer {self.settings.access_token}"}
 
+        if before is not None:
+            before = self._handle_datetime(before)
+        if after is not None:
+            after = self._handle_datetime(after)
+
         # Make the GET request
-        response = requests.get(url, headers=headers)
+        response = requests.get(
+            url,
+            headers=headers,
+            params=StravaGetActivitiesRequest(
+                before=before, after=after, page=page, per_page=per_page
+            ).model_dump(),
+        )
 
         if response.status_code != 200:
             raise ValueError(
@@ -58,6 +76,14 @@ class StravaClient:
 
         list_act_adapter = TypeAdapter(list[StravaActivity])
         return list_act_adapter.validate_python(response.json())
+
+    def _handle_datetime(self, dt: datetime) -> int:
+        """
+        Convert the datetime object to unix
+        timestamp.
+        """
+
+        return int(dt.timestamp())
 
     def _verify_token(self):
         """

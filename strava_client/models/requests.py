@@ -3,7 +3,7 @@ from strava_client.models.base import StravaBaseModel
 
 class StravaGetTokenRequest(StravaBaseModel):
     """
-    Model holding all information needed to get
+    Model with the request parameters to get
     an access token from Strava API.
 
     Attributes:
@@ -27,7 +27,7 @@ class StravaGetTokenRequest(StravaBaseModel):
 
 class StravaGetTokenResponse(StravaBaseModel):
     """
-    Model holding all information received
+    Model with the request parameters needed
     when getting an access token from Strava API.
     It is used also when refreshing the token.
 
@@ -44,7 +44,7 @@ class StravaGetTokenResponse(StravaBaseModel):
 
 class StravaRefreshTokenRequest(StravaBaseModel):
     """
-    Model holding all information needed to refresh
+    Model with the request parameters to refresh
     an access token from Strava API.
 
     Attributes:
@@ -64,3 +64,27 @@ class StravaRefreshTokenRequest(StravaBaseModel):
     client_secret: str
     refresh_token: str
     grant_type: str = "refresh_token"  # This is the default value
+
+
+class StravaGetActivitiesRequest(StravaBaseModel):
+    """
+    Model with the request parameters to get
+    a list of activities from the Strava API.
+
+    Attributes:
+        before:
+            An epoch timestamp to get activities
+            before this time.
+        after:
+            An epoch timestamp to get activities
+            after this time.
+        page:
+            The page number to get.
+        per_page:
+            The number of activities to get per page.
+    """
+
+    before: int | None
+    after: int | None
+    page: int
+    per_page: int

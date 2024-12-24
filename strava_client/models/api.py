@@ -19,7 +19,7 @@ class StravaActivity(StravaBaseModel):
     """
     Model holding information about a Strava activity.
     In Strava it's actually called "SummaryActivity"
-    (https://developers.strava.com/docs/reference/#api-models-DetailedActivity)
+    (https://developers.strava.com/docs/reference/#api-models-SummaryActivity)
     """
 
     id: int
