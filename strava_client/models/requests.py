@@ -1,3 +1,6 @@
+from datetime import datetime
+
+from pydantic import model_validator
 from strava_client.models.base import StravaBaseModel
 
 
@@ -84,7 +87,21 @@ class StravaGetActivitiesRequest(StravaBaseModel):
             The number of activities to get per page.
     """
 
-    before: int | None
-    after: int | None
+    before: datetime | int | None
+    after: datetime | int | None
     page: int
     per_page: int
+
+    @model_validator(mode="after")
+    def validate_before_after(self):
+        """
+        Cast before and after to epoch timestamps
+        """
+
+        if isinstance(self.before, datetime):
+            self.before = int(self.before.timestamp())
+
+        if isinstance(self.after, datetime):
+            self.after = int(self.after.timestamp())
+
+        return self

@@ -38,8 +38,8 @@ class StravaClient:
 
     def get_activities(
         self,
-        before: datetime | str | None = None,
-        after: datetime | str | None = None,
+        before: datetime | None = None,
+        after: datetime | None = None,
         page: int = 1,
         per_page: int = 30,
     ) -> list[StravaActivity]:
@@ -55,17 +55,15 @@ class StravaClient:
 
         headers = {"Authorization": f"Bearer {self.settings.access_token}"}
 
-        if before is not None:
-            before = self._handle_datetime(before)
-        if after is not None:
-            after = self._handle_datetime(after)
-
         # Make the GET request
         response = requests.get(
             url,
             headers=headers,
             params=StravaGetActivitiesRequest(
-                before=before, after=after, page=page, per_page=per_page
+                before=before,
+                after=after,
+                page=page,
+                per_page=per_page,
             ).model_dump(),
         )
 
@@ -76,14 +74,6 @@ class StravaClient:
 
         list_act_adapter = TypeAdapter(list[StravaActivity])
         return list_act_adapter.validate_python(response.json())
-
-    def _handle_datetime(self, dt: datetime) -> int:
-        """
-        Convert the datetime object to unix
-        timestamp.
-        """
-
-        return int(dt.timestamp())
 
     def _verify_token(self):
         """

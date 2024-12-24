@@ -26,7 +26,7 @@ if __name__ == "__main__":
     activities = client.get_activities(before=end, after=start, per_page=per_page)
 
     # this holds for me :)
-    assert len(activities) == 1
+    assert len(activities) == 1, len(activities)
 
     for activity in activities:
         print(
