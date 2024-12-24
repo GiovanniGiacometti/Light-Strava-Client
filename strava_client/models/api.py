@@ -18,12 +18,13 @@ class MetaAthlete(StravaBaseModel):
 class StravaActivity(StravaBaseModel):
     """
     Model holding information about a Strava activity.
-    In Strava it's actually called "DetailedActivity"
+    In Strava it's actually called "SummaryActivity"
     (https://developers.strava.com/docs/reference/#api-models-DetailedActivity)
     """
 
     id: int
     external_id: str
+    name: str  # The name of the activity
     athlete: MetaAthlete
     distance: float
     moving_time: int  # in seconds
