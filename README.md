@@ -24,7 +24,7 @@ A Strava application is characterized by the following essential properties:
 
 These information are created and provided as soon as the application is created. However, you still need to authorize the application to access your data. Specifically, you need to interact with the Strava API to request an authorization code for specific [scopes](https://developers.strava.com/docs/authentication/#detailsaboutrequestingaccess), which will then be exchanged for a new access token and a refresh token. 
 
-This process is well described in the [Strava API documentation](https://developers.strava.com/docs/getting-started). What you need to understand is that these steps will generate 3 new important pieces of information:
+This process is well described in the [Strava API documentation](https://developers.strava.com/docs/getting-started). What is relevant is that these steps will generate 3 new important pieces of information:
 
 - `access_token`: a new authorized token that allows the application to access your data.
 - `refresh_token`: a token that allows the application to refresh the access token.
@@ -36,7 +36,7 @@ The Light Strava Client can help you accelerate the authentication process and p
 
 ### 🔐 Authentication
 
-Once you have created the application, you should insert its information in a file called `.strava.secrets`. You can find an example of the file in the repo (make sure you properly rename it if you want to use it). Notice that you can change the name of the file by changing the related variable in the `constants.py` file.
+Once you have created the application, you should insert its information in a file called `.strava.secrets`. You can find an example of the file in the repo. Notice that you can change the default name name of the settings file by changing the related variable in the `constants.py` file.
 
 Then, you can instantiate the client as follows:
 
