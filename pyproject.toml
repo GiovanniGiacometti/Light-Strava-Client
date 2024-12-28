@@ -4,6 +4,9 @@ version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.10"
+classifiers = [
+    "License :: OSI Approved :: Apache Software License"
+]
 dependencies = [
     "pydantic-settings>=2.7.0",
     "pydantic>=2.10.4",
@@ -16,3 +19,4 @@ dev = [
     "ruff>=0.8.4",
     "types-requests>=2.32.0.20241016",
 ]
+
