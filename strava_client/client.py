@@ -69,7 +69,8 @@ class StravaClient:
 
         if response.status_code != 200:
             raise ValueError(
-                f"Failed to retrieve activities. Status code: {response.status_code}"
+                f"Failed to retrieve activities. Status code: {response.status_code}."
+                f" Response: {response.text}"
             )
 
         list_act_adapter = TypeAdapter(list[StravaActivity])

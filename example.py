@@ -32,3 +32,23 @@ if __name__ == "__main__":
         print(
             f"{activity.name} - {activity.sport_type.value}: {activity.distance}m on {activity.start_date}"
         )
+
+    # Paginated
+
+    print("----------")
+
+    pages = 5
+    per_page = 20
+
+    ids = []
+
+    for page in range(1, pages + 1):
+        activities = client.get_activities(page=page, per_page=per_page)
+        print(f"Page {page + 1}: {len(activities)} activities")
+        ids.extend(list(map(lambda x: x.id, activities)))
+
+    assert len(ids) == pages * per_page
+    assert len(set(ids)) == len(ids)
+
+    for i in range(len(activities) - 1):
+        assert activities[i].start_date > activities[i + 1].start_date
