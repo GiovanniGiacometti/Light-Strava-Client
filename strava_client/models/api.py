@@ -23,18 +23,20 @@ class StravaActivity(StravaBaseModel):
     """
 
     id: int
-    external_id: str
+    external_id: str | None = None
     name: str  # The name of the activity
     athlete: MetaAthlete
     distance: float
     moving_time: int  # in seconds
     elapsed_time: int  # in seconds
     total_elevation_gain: float
-    elev_high: float
-    elev_low: float
+    elev_high: float | None = None  # sometimes missing
+    elev_low: float | None = None  # sometimes missing
     sport_type: StravaSportType
     start_date: datetime
     start_date_local: datetime
     timezone: str
     average_speed: float
     max_speed: float
+    start_latlng: list[float]
+    end_latlng: list[float]
